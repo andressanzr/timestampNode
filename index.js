@@ -18,9 +18,14 @@ app.use(express.static("public"));
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
+app.get("/api", function (req, res) {
+  let myDate = new Date();
+  res.json({ unix: myDate.getTime(), utc: myDate.toUTCString() });
+});
 app.get("/api/:date", function (req, res) {
   var input = req.params.date;
   let myDate;
+  console.log(input);
   if (/\d{5,16}\d$/.test(input)) {
     myDate = new Date(Number.parseInt(input));
     res.json({ unix: myDate.getTime(), utc: myDate.toUTCString() });
