@@ -21,8 +21,11 @@ app.get("/", function (req, res) {
 app.get("/api/:date", function (req, res) {
   var input = req.params.date;
   let myDate;
-  if (/\d{5,16}\d$/.test(input) || Date.parse(input)) {
+  if (/\d{5,16}\d$/.test(input)) {
     myDate = new Date(Number.parseInt(input));
+    res.json({ unix: myDate.getTime(), utc: myDate.toUTCString() });
+  } else if (Date.parse(input)) {
+    myDate = new Date(Date.parse(input));
     res.json({ unix: myDate.getTime(), utc: myDate.toUTCString() });
   } else {
     res.json({ err: "Invalid Date" });
