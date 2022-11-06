@@ -18,9 +18,10 @@ app.use(express.static("public"));
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
-app.get("/api", function (req, res) {
+app.get("/api", function (req, res, next) {
   let myDate = new Date();
   res.json({ unix: myDate.getTime(), utc: myDate.toUTCString() });
+  next();
 });
 app.get("/api/:date", function (req, res) {
   var input = req.params.date;
